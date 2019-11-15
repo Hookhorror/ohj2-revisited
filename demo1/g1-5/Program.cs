@@ -33,11 +33,13 @@ namespace g1_5
             printArray(test);
 
             int[] test2 = new int[10];
-            test2 = FillArray(test2, 1);
+            test2 = FillArray(test2, 9);
             printArray(test2);
 
-            List<int[]> test3 = Combinations(3, 3);
+            List<int[]> test3 = Combinations(3, 2);
             printArraysFromList(test3);
+
+
 
         }
 
@@ -52,9 +54,13 @@ namespace g1_5
 
         public static void printArraysFromList(List<int[]> list)
         {
-            foreach (var array in list)
+            // foreach (var array in list)
+            // {
+            //     printArray(array);
+            // }
+            for (int i = 0; i < list.Count; i++)
             {
-                printArray(array);
+                printArray(list[i]);
             }
         }
 
@@ -95,12 +101,16 @@ namespace g1_5
             int[] combination = new int[howMany];
             int[] lastCombination = FillArray(combination, (variables - 1));
             combinations.Add(combination);
-            while (!combination.Equals(lastCombination))
+
+            while (!AllMatch(combination, lastCombination))
             {
-                combination = raiseBinaryByone(combination, variables);
-                combinations.Add(combination);
+                int[] a = new int[howMany];
+
+                // a = CopyArray(combination);
+                a = raiseBinaryByone(combination, variables);
+                combination = CopyArray(a);
+                combinations.Add(a);
             }
-            combinations.Add(lastCombination);
 
             return combinations;
         }
@@ -112,11 +122,29 @@ namespace g1_5
             {
                 a[i] = value;
             }
-            Console.WriteLine("jee");
-            printArray(array);
-            printArray(a);
 
             return a;
+        }
+
+        public static bool AllMatch(int[] array1, int[] array2)
+        {
+            for (int i = 0; i < array1.Length; i++)
+            {
+                if (array1[i] != array2[i]) return false;
+            }
+
+            return true;
+        }
+
+        public static int[] CopyArray(int[] array)
+        {
+            int[] newArray = new int[array.Length];
+            for (int i = 0; i < array.Length; i++)
+            {
+                newArray[i] = array[i];
+            }
+
+            return newArray;
         }
     }
 }
